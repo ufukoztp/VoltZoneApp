@@ -6,8 +6,16 @@ String? _address;
 int? _point;
 String? _photo;
 int? _shb;
+bool _isConnection=true;
 
-String? get address => _address;
+bool get isConnection => _isConnection;
+
+  set isConnection(bool value) {
+    _isConnection = value;
+    notifyListeners();
+  }
+
+  String? get address => _address;
 int? get point => _point;
 String? get name => _name;
 int? get shb => _shb;

@@ -1,3 +1,6 @@
+
+
+/*
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
@@ -6,7 +9,6 @@ import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
 import 'package:flutter_voltzone/presentation/provider/filter_provider.dart';
 import 'package:flutter_voltzone/presentation/screen/map_screen.dart';
 import 'package:getwidget/components/toggle/gf_toggle.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -19,7 +21,7 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<FilterScreen> {
   double value=0.5;
-   late FilterProvider filterProvider;
+  late FilterProvider filterProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +32,11 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
         title: Text("Filtreler",style: TextStyle(color: Colors.black),),
         elevation: 0,
         iconTheme: IconThemeData(
-          color: Colors.black
+            color: Colors.black
         ),
       ),
       backgroundColor: Colors.white,
-      body: filterProvider.isConnection == true?Padding(
+      body: Padding(
         padding: const EdgeInsets.only(left: 40.0,top: 5,right: 40),
         child: SingleChildScrollView(
           child: Column(
@@ -45,26 +47,27 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                Column(
-                  children: [
+                  Column(
+                    children: [
 
-                    Container(
-                      height: 45,
-                      width: 45,
-                      decoration: BoxDecoration(
-                          image: const DecorationImage(
-                              fit: BoxFit.contain,
-                              image: AssetImage("assets/chademoplug1.png")
-                          ),
-                          borderRadius: BorderRadius.circular(10)
-                      ),                       ),
-                    Radio(value: 1,  onChanged: (value){
-                      filterProvider.sicon=value??0;
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: BoxDecoration(
+                            image: const DecorationImage(
+                                fit: BoxFit.contain,
+                                image: AssetImage("assets/chademoplug1.png")
+                            ),
+                            borderRadius: BorderRadius.circular(10)
+                        ),                       ),
+                      Radio(value: "CHAdeMO", groupValue: filterProvider.socketType, onChanged: (value){
+                        filterProvider.sicon=1;
+                        filterProvider.socketType = value.toString();
 
-                    }, groupValue: filterProvider.sicon,),
-                    Text("CHAdeMO",style: TextStyle(color: Colors.grey),)
-                  ],
-                ),
+                      }),
+                      Text("CHAdeMO",style: TextStyle(color: Colors.grey),)
+                    ],
+                  ),
                   Column(
                     children: [
 
@@ -78,10 +81,10 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                             ),
                             borderRadius: BorderRadius.circular(10)
                         ),                         ),
-                      Radio(value: 2,onChanged: (value){
-                        filterProvider.sicon=value??0;
-
-                      }, groupValue: filterProvider.sicon,),
+                      Radio(value: "Type 2", groupValue: filterProvider.socketType, onChanged: (value){
+                        filterProvider.sicon=2;
+                        filterProvider.socketType = value.toString();
+                      }),
                       Text("TYPE 2",style: TextStyle(color: Colors.grey),)
                     ],
                   ),
@@ -97,9 +100,10 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                             ),
                             borderRadius: BorderRadius.circular(10)
                         ),                         ),
-                      Radio(value: 3, onChanged: (value){
-                        filterProvider.sicon=value??0;
-                      }, groupValue: filterProvider.sicon,),
+                      Radio(value: "ccs", groupValue: filterProvider.socketType, onChanged: (value){
+                        filterProvider.sicon=3;
+                        filterProvider.socketType = value.toString();
+                      }),
                       Text("CCS",style: TextStyle(color: Colors.grey),)
                     ],
                   ),
@@ -125,9 +129,9 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                             ),
                             borderRadius: BorderRadius.circular(10)
                         ),                      ),
-                      Checkbox(value: filterProvider.isEsarj,onChanged: (value){
-                        filterProvider.isEsarj = value??false;
-
+                      Radio(value: "EŞarj", groupValue: filterProvider.station_owner, onChanged: (value){
+                        filterProvider.shb=1;
+                        filterProvider.station_owner = value.toString();
                       }),
                       Text("EŞarj",style: TextStyle(color: Colors.grey),)
                     ],
@@ -144,9 +148,9 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                             ),
                             borderRadius: BorderRadius.circular(10)
                         ),                      ),
-                      Checkbox(value: filterProvider.isZes, onChanged: (value){
-                        filterProvider.isZes = value??false;
-                        print(filterProvider.isZes);
+                      Radio(value: "ZES", groupValue: filterProvider.station_owner, onChanged: (value){
+                        filterProvider.shb=2;
+                        filterProvider.station_owner = value.toString();
 
                       }),
                       Text("ZES",style: TextStyle(color: Colors.grey),)
@@ -163,8 +167,9 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                                 image: AssetImage("assets/sharz_logo.png")
                             ),
                             borderRadius: BorderRadius.circular(10)),),
-                      Checkbox(value: filterProvider.isSharz, onChanged: (value){
-                        filterProvider.isSharz = value??false;
+                      Radio(value: "Sharz", groupValue: filterProvider.station_owner, onChanged: (value){
+                        filterProvider.shb=4;
+                        filterProvider.station_owner = value.toString();
 
                       }),
                       Text("Sharz",style: TextStyle(color: Colors.grey),)
@@ -182,8 +187,9 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                             ),
                             borderRadius: BorderRadius.circular(10)
                         ),                      ),
-                      Checkbox(value: filterProvider.isVoltRun, onChanged: (value){
-                        filterProvider.isVoltRun = value??false;
+                      Radio(value: "VoltRUN", groupValue: filterProvider.station_owner, onChanged: (value){
+                        filterProvider.shb=3;
+                        filterProvider.station_owner = value.toString();
                       }),
                       Text("VoltRUN",style: TextStyle(color: Colors.grey),)
                     ],
@@ -198,11 +204,11 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                 child: Row(
                   children: [
                     powerFilterButton(text: filterProvider.filterButtonItem[0],value:filterProvider.filterButtonItemValue[0],
-                    onTap: (){
-                      filterProvider.filterButtonItemValue[0]=!filterProvider.filterButtonItemValue[0];
-                      print(filterProvider.filterButtonItemValue[0]);
-                      filterProvider.notifyListeners();
-                    },
+                      onTap: (){
+                        filterProvider.filterButtonItemValue[0]=!filterProvider.filterButtonItemValue[0];
+                        print(filterProvider.filterButtonItemValue[0]);
+                        filterProvider.notifyListeners();
+                      },
                     ),
                     SizedBox(width: 8,),
                     powerFilterButton(text: filterProvider.filterButtonItem[1],value:filterProvider.filterButtonItemValue[1],
@@ -237,13 +243,15 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                     powerFilterButton(text: filterProvider.filterButtonItem[4],value:filterProvider.filterButtonItemValue[4],
                       onTap: (){
                         filterProvider.filterButtonItemValue[4]=!filterProvider.filterButtonItemValue[4];
+                        print(filterProvider.filterButtonItemValue[4]);
                         filterProvider.notifyListeners();
                       },),
                     SizedBox(width: 8,),
                     powerFilterButton(text: filterProvider.filterButtonItem[5],value:filterProvider.filterButtonItemValue[5],
                       onTap: (){
                         filterProvider.filterButtonItemValue[5]=!filterProvider.filterButtonItemValue[5];
-                         filterProvider.notifyListeners();
+                        print(filterProvider.filterButtonItemValue[5]);
+                        filterProvider.notifyListeners();
                       },),
                   ],
                 ),
@@ -255,7 +263,7 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                 children: [
                   GestureDetector(
                     onTap: ()async{
-                     await filterProvider.getChargeStationWithFilter();
+                      await filterProvider.getChargeStationWithFilter();
                     },
                     child: Container(
                       width: 96,
@@ -272,8 +280,11 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                   SizedBox(width: 8,),
                   GestureDetector(
                     onTap: (){
-                      filterProvider.getChargeStation();
-                     },
+                      for(var i=0;i<filterProvider.filterButtonItemValue.length;i++){
+                        filterProvider.filterButtonItemValue[i]=false;
+                      }
+                      filterProvider.notifyListeners();
+                    },
                     child: Container(
                       width: 96,
                       height: 32,
@@ -351,24 +362,19 @@ class _FilterScreenState extends State<FilterScreen> with AfterLayoutMixin<Filte
                */
             ],),
         ),
-      ):Center(child:Text('Bağlantınızı kontrol ediniz'),)
+      ),
     );
   }
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) async{
     filterProvider.context = context;
-    bool result = await InternetConnectionChecker().hasConnection;
-    if(result == true) {
-      filterProvider.isConnection=true;
-    } else {
-    filterProvider.isConnection=false;
-    }
-   }
+    await filterProvider.getChargeStation();
+  }
 }
 
 class powerFilterButton extends StatefulWidget {
-    powerFilterButton({
+  powerFilterButton({
     Key? key, required this.text,required this.value,  this.onTap
   }) : super(key: key);
 
@@ -388,22 +394,23 @@ class _powerFilterButtonState extends State<powerFilterButton> {
 
       },
       child: Container(
-        height: 4.h,
-         decoration: BoxDecoration(
-          color: widget.value ==true?Colors.blue:Colors.white,
-          border: Border.all(color: widget.value ==false?Colors.black:Colors.blue),
-          borderRadius: BorderRadius.circular(8)
-        ),
-        child: Center(child: Padding(
-          padding: const EdgeInsets.only(left:8.0,right: 8.0),
-          child: Row(
-             children: [
-              widget.value==true?Icon(Icons.check,color: Colors.white,size: 4.w,):Container(),
-              SizedBox(width: 10,),
-              Text(widget.text,style: TextStyle(color:widget.value==true? Colors.white:Colors.black,fontSize: 3.w),),
-            ],
+          height: 4.h,
+          decoration: BoxDecoration(
+              color: widget.value ==true?Colors.blue:Colors.white,
+              border: Border.all(color: widget.value ==false?Colors.black:Colors.blue),
+              borderRadius: BorderRadius.circular(8)
           ),
-        ),)),
+          child: Center(child: Padding(
+            padding: const EdgeInsets.only(left:8.0,right: 8.0),
+            child: Row(
+              children: [
+                widget.value==true?Icon(Icons.check,color: Colors.white,size: 4.w,):Container(),
+                SizedBox(width: 10,),
+                Text(widget.text,style: TextStyle(color:widget.value==true? Colors.white:Colors.black,fontSize: 3.w),),
+              ],
+            ),
+          ),)),
     );
   }
 }
+*/

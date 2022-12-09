@@ -1,9 +1,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_voltzone">
+    package="com.voltzone.ist">
+
+
+    <!-- Provide required visibility configuration for API level 30 and above -->
+    <queries>
+        <!-- If your app checks for SMS support -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="sms" />
+        </intent>
+        <!-- If your app checks for call support -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="tel" />
+        </intent>
+    </queries>
+
    <application
-        android:label="flutter_voltzone"
+        android:label="VoltZones"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyC5gxGg5G0X9mHPb-rqiEzZ96hD9Z-ao28"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,4 +49,5 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-</manifest>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+ </manifest>

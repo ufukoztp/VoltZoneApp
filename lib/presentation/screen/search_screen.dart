@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_voltzone/presentation/provider/search_provider.dart';
+import 'package:flutter_voltzone/presentation/screen/station_detail_screen.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -23,7 +25,13 @@ class _SearchScreenState extends State<SearchScreen> with AfterLayoutMixin<Searc
 
   @override
   FutureOr<void> afterFirstLayout(BuildContext context) async{
-    await searchProvider.getChargeZones();
+    bool result = await InternetConnectionChecker().hasConnection;
+     if(result == true) {
+       searchProvider.isConnection=true;
+       searchProvider.getChargeZones();
+    } else {
+       searchProvider.isConnection=false;
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -37,62 +45,65 @@ class _SearchScreenState extends State<SearchScreen> with AfterLayoutMixin<Searc
           color: Colors.black
         ),
       ),
-      body: SingleChildScrollView(
+      body:searchProvider.isConnection==true ? SingleChildScrollView(
         child: Column(
-           children: [
+            children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top:16.0),
-              child: Container(
-                width: 280,
-                height: 32,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                    boxShadow: [BoxShadow(color: Colors.black26,blurRadius: 5)]
+              padding: const EdgeInsets.only(top:7.0,left: 48,right: 48),
+              child: Card(
+                 shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.black12),
+                   borderRadius: BorderRadius.circular(8)
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top:6),
-                  child: TextFormField(
-                    onChanged: (value)async{
-                      print(searchProvider.chargeList.length);
-                      print(value);
+                child: TextFormField(
+                  onChanged: (value)async{
                     searchProvider.chargeListView =  searchProvider.chargeList.where((element) {
-                      if(element.nameCode!.contains(value.toUpperCase())) {
-                        return true;
+                      if(element.name != null&&element.trf != null){
+                        if(element.name!.toUpperCase().contains(value.toUpperCase())||element.trf!.toUpperCase().contains(value.toUpperCase())) {
+                          return true;
+                        }else{
+                          return false;
+                        }
                       }else{
                         return false;
                       }
-
                     }).toList();
-                   print(searchProvider.chargeListView.length);
-                    },
-                    controller: searchProvider.textEditingController,
-                   decoration: InputDecoration(
-                     prefixIcon: GestureDetector(
-                         onTap: ()async{
-                            searchProvider.textEditingController.clear();
-                         },
-                         child: Icon(Icons.clear,size: 20,)),
-                   border: InputBorder.none
-                   ),
-                   ),
-                ),
+                   },
+                  controller: searchProvider.textEditingController,
+                 decoration: InputDecoration(
+                   prefixIcon: GestureDetector(
+                       onTap: ()async{
+                          searchProvider.textEditingController.clear();
+                          searchProvider.chargeListView =  searchProvider.chargeList;
+                       },
+                       child: Icon(Icons.clear,size: 20,)),
+                 border: InputBorder.none
+                 ),
+                 ),
               ),
             ),
           ),
              SizedBox(height:24 ,),
-             Column(children: List.generate(searchProvider.chargeListView.length, (index) =>searchWidget(name:searchProvider.chargeListView[index].name!,address: searchProvider.chargeListView[index].trf!,iconCode: searchProvider.chargeListView[index].shb! ),
-             ),),
+            ListView.builder(
+              physics:NeverScrollableScrollPhysics() ,
+              itemBuilder: (context,index){
+              return GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>StationDetail(name: searchProvider.chargeListView[index].name??"", address: searchProvider.chargeListView[index].trf??"", point: 0, photo: "photo", shb: searchProvider.chargeListView[index].shb??0, lat: double.parse(searchProvider.chargeListView[index].lat!), long: double.parse(searchProvider.chargeListView[index].long!), sicon:searchProvider.chargeListView[index].sicon??[] , stipi: searchProvider.chargeListView[index].stip??[])));
+                },
+                child: searchWidget(name:searchProvider.chargeListView[index].name??"",address: searchProvider.chargeListView[index].trf??"",iconCode: searchProvider.chargeListView[index].shb!),
+              );
+            },shrinkWrap: true,itemCount:searchProvider.chargeListView !=null ?searchProvider.chargeListView.length :0 ,),
 
 
 
         ],),
-      ),
+      ):Center(child:Text('Bağlantınızı kontrol ediniz'),)
     );
   }
 
-  Column searchWidget({required String name,required String address,required int iconCode}) {
+   searchWidget({required String name,required String address,required int iconCode}) {
     return Column(children: [
            Divider(color: Colors.black54,endIndent: 15,indent: 15,),
            Padding(
@@ -100,7 +111,6 @@ class _SearchScreenState extends State<SearchScreen> with AfterLayoutMixin<Searc
              child: Row(
                crossAxisAlignment: CrossAxisAlignment.start,
                children: [
-
                  if(iconCode==1)Container(
                    width: 48,
                    height: 48,
@@ -145,17 +155,17 @@ class _SearchScreenState extends State<SearchScreen> with AfterLayoutMixin<Searc
                        borderRadius: BorderRadius.circular(10)
                    ),
                  ),
-                 Padding(
-                   padding: const EdgeInsets.only(left:16.0),
+                 SizedBox(width: 10,),
+                 Expanded(
                    child: Column(
                      mainAxisAlignment: MainAxisAlignment.start,
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
-                       Text(name,style: TextStyle(fontSize: 14,fontWeight: FontWeight.w700),),
+                       Text(name,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700),),
                        SizedBox(height:10 ,),
-                       Text(address,style: TextStyle(fontSize: 8,color: Colors.grey),),
+                       Text(address,style: TextStyle(fontSize: 13,color: Colors.grey),),
                        SizedBox(height:10 ,),
-                     //  Text("Kullanım Saatleri: 00:00 - 24:00",style: TextStyle(fontSize: 8,color: Colors.grey),),
+                     //Text("Kullanım Saatleri: 00:00 - 24:00",style: TextStyle(fontSize: 8,color: Colors.grey),),
                      ],
                    ),
                  )

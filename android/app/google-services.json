@@ -1,0 +1,104 @@
+{
+  "project_info": {
+    "project_number": "135097496566",
+    "project_id": "voltzone-6f46e",
+    "storage_bucket": "voltzone-6f46e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135097496566:android:3adaee0692d2ec3cc64dd7",
+        "android_client_info": {
+          "package_name": "com.example.flutter_voltzone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135097496566-m454ggnhjtkpahpu6esluo1pjlhelrh7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_voltzone",
+            "certificate_hash": "ef4c57739578c90b1c1e2c22862e8e42a37681f2"
+          }
+        },
+        {
+          "client_id": "135097496566-7mqi599jksueiifj38re5kuji6t849t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5gxGg5G0X9mHPb-rqiEzZ96hD9Z-ao28"
+        },
+        {
+          "current_key": "AIzaSyBRVl3AU8Y8h2dOOttNlp0vdTXIXunk6rM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135097496566-7mqi599jksueiifj38re5kuji6t849t9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "135097496566-2vrdth3imr7u1lfmnvoamdh2417bnr1a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterVoltzone"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135097496566:android:b97860805811b5aac64dd7",
+        "android_client_info": {
+          "package_name": "com.voltzone.ist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "135097496566-t73njib1mjluturmme9bcqiqf7gepdnj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voltzone.ist",
+            "certificate_hash": "ef4c57739578c90b1c1e2c22862e8e42a37681f2"
+          }
+        },
+        {
+          "client_id": "135097496566-7mqi599jksueiifj38re5kuji6t849t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5gxGg5G0X9mHPb-rqiEzZ96hD9Z-ao28"
+        },
+        {
+          "current_key": "AIzaSyBRVl3AU8Y8h2dOOttNlp0vdTXIXunk6rM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "135097496566-7mqi599jksueiifj38re5kuji6t849t9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "135097496566-2vrdth3imr7u1lfmnvoamdh2417bnr1a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterVoltzone"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
