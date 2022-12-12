@@ -1,4 +1,4 @@
-package com.example.flutter_voltzone
+package com.voltzone.ist
 
 import io.flutter.embedding.android.FlutterActivity
 
